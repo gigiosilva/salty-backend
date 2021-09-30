@@ -7,12 +7,14 @@ module.exports = {
   plugins: [
     '@typescript-eslint/eslint-plugin',
     'import',
+    'security',
   ],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'airbnb-base/legacy',
     'plugin:import/recommended',
+    'plugin:security/recommended'
   ],
   root: true,
   env: {
