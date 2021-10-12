@@ -1,0 +1,20 @@
+### GET FOOD-PLACES
+GET http://localhost:3000/food-places
+
+### GET FOOD-PLACES WITH SEARCH
+GET http://localhost:3000/food-places?search=Pedidos
+
+### GET FOOD-PLACE BY ID
+GET http://localhost:3000/food-places/f357a6c1-f912-4b4e-9016-4ef9c28bec06
+
+### DELETE FOOD-PLACE BY ID
+DELETE http://localhost:3000/food-places/f357a6c1-f912-4b4e-9016-4ef9c28bec06
+
+### ADD FOOD-PLACE
+POST http://localhost:3000/food-places
+content-type: application/json
+
+{
+  "name": "Pedidos Ya",
+  "website": "https://www.pedidosya.com/"
+}
