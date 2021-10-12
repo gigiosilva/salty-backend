@@ -88,5 +88,8 @@
       "pre-commit": "npm run lint",
       "pre-push": "npm run test"
     }
+  },
+  "engines": {
+    "node": "14.16.1"
   }
 }
