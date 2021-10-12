@@ -1,0 +1,43 @@
+clone:
+  depth: full
+pipelines:
+  default:
+    - step:
+        name: Build and Test
+        image: node:14.16.1
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run test
+          - npm run build
+    - step:
+        name: Lint
+        image: node:14.16.1
+        caches:
+          - node
+        script:
+          - npm run lint
+  branches:
+    master:
+      - step:
+          name: Build and Test
+          image: node:14.16.1
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run test
+            - npm run build
+      - step:
+          name: Lint
+          image: node:14.16.1
+          caches:
+            - node
+          script:
+            - npm run lint
+      - step:
+          name: Publish Prod
+          deployment: production
+          script:
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/api-salty-sparkdigital.git HEAD:master -f
