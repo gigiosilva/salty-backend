@@ -1,12 +1,17 @@
 import {
   Body, Controller, Delete, Get, Logger, Param, Post, Query,
 } from '@nestjs/common';
+import {
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { CreateFoodPlaceDto } from './dto/create-food-place.dto';
 import { GetFoodPlacesFilterDto } from './dto/get-food-places-filter.dto';
 import { FoodPlace } from './food-place.entity';
 import { FoodPlacesService } from './food-places.service';
 
+@ApiTags('Food places')
 @Controller('food-places')
 export class FoodPlacesController {
   private logger = new Logger('FoodPlacesController', { timestamp: true });
@@ -14,6 +19,7 @@ export class FoodPlacesController {
   constructor(private foodPlacesService: FoodPlacesService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Get food places' })
   getFoodPlaces(
     @Query() filterDto: GetFoodPlacesFilterDto,
   ): Promise<FoodPlace[]> {
@@ -27,11 +33,13 @@ export class FoodPlacesController {
   }
 
   @Get('/:id')
+  @ApiOperation({ summary: 'Get food by id' })
   getFoodPlaceById(@Param('id') id: string): Promise<FoodPlace> {
     return this.foodPlacesService.getFoodPlaceById(id);
   }
 
   @Post()
+  @ApiOperation({ summary: 'Create food place' })
   createFoodPlace(
     @Body() createFoodPlaceDto: CreateFoodPlaceDto,
   ): Promise<FoodPlace> {
@@ -43,6 +51,7 @@ export class FoodPlacesController {
   }
 
   @Delete('/:id')
+  @ApiOperation({ summary: 'Delete food place' })
   deleteFoodPlace(@Param('id') id: string): Promise<void> {
     return this.foodPlacesService.deleteFoodPlace(id);
   }

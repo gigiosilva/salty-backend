@@ -14,9 +14,8 @@ pipelines:
     - step:
         name: Lint
         image: node:14.16.1
-        caches:
-          - node
         script:
+          - npm install
           - npm run lint
   branches:
     master:
