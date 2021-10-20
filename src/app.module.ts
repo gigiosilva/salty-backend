@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 
+import DatabaseConfig from '../ormconfig';
+
 import { FoodPlacesModule } from './food-places/food-places.module';
 
 @Module({
@@ -14,18 +16,7 @@ import { FoodPlacesModule } from './food-places/food-places.module';
         DATABASE_URL: Joi.required(),
       }),
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      ...(process.env.NODE_ENV !== 'dev' && {
-        ssl: true,
-        extra: {
-          ssl: { rejectUnauthorized: false },
-        },
-      }),
-      url: process.env.DATABASE_URL,
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(DatabaseConfig),
     FoodPlacesModule,
   ],
 })
