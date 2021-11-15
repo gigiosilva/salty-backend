@@ -16,5 +16,5 @@ export class CreateFoodPlaceDto {
   readonly country: string;
 
   @ApiProperty()
-  readonly isCustom: string;
+  readonly isCustom: boolean;
 }

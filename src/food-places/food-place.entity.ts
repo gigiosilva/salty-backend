@@ -29,5 +29,5 @@ export class FoodPlace {
     default: false,
     name: 'is_custom',
   })
-  isCustom: string;
+  isCustom: boolean;
 }
