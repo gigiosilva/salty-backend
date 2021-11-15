@@ -8,4 +8,13 @@ export class CreateFoodPlaceDto {
 
   @ApiProperty()
   readonly website: string;
+
+  @ApiProperty()
+  readonly logo: string;
+
+  @ApiProperty()
+  readonly country: string;
+
+  @ApiProperty()
+  readonly isCustom: string;
 }

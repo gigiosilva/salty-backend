@@ -14,4 +14,20 @@ export class FoodPlace {
     nullable: true,
   })
   website: string;
+
+  @Column({
+    nullable: true,
+  })
+  logo: string;
+
+  @Column({
+    nullable: true,
+  })
+  country: string;
+
+  @Column({
+    default: false,
+    name: 'is_custom',
+  })
+  isCustom: string;
 }

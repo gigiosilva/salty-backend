@@ -36,12 +36,7 @@ export class FoodPlacesRepository extends Repository<FoodPlace> {
   async createFoodPlace(
     createFoodPlaceDto: CreateFoodPlaceDto,
   ): Promise<FoodPlace> {
-    const { name, website } = createFoodPlaceDto;
-
-    const foodPlace = this.create({
-      name,
-      website,
-    });
+    const foodPlace = this.create(createFoodPlaceDto);
 
     try {
       await this.save(foodPlace);
