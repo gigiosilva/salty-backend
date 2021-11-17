@@ -117,6 +117,7 @@ module.exports = {
     ],
     'linebreak-style': 'off',
     'prettier/prettier': 'off',
+    'camelcase': 'off',
   },
   settings: {
     'import/resolver': {

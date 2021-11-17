@@ -26,9 +26,12 @@
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
+    "@nestjs/axios": "0.0.3",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.0.2",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/jwt": "^8.0.0",
+    "@nestjs/passport": "^8.0.1",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.1.0",
     "@nestjs/typeorm": "^8.0.2",
@@ -36,6 +39,9 @@
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
     "joi": "^17.4.2",
+    "jwks-rsa": "^2.0.5",
+    "passport": "^0.5.0",
+    "passport-jwt": "^4.0.0",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
