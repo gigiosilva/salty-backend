@@ -16,5 +16,7 @@ content-type: application/json
 
 {
   "name": "Pedidos Ya",
-  "website": "https://www.pedidosya.com/"
+  "website": "https://www.pedidosya.com/",
+  "logo": "https://play-lh.googleusercontent.com/ZYo5AnawdMcqiL3FY2yIj_sFrN5wvtIXVqmipX4DUrAew1MaRezRV9mC01SCJCYp3qcr/",
+  "country": "AR"
 }
