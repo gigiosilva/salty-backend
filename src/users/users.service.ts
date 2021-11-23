@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { Method } from 'axios';
 import { map, lastValueFrom } from 'rxjs';
 
-import { GetUsersDto } from './dto/get-users-dto';
+import { UserModel } from './user.model';
 
 @Injectable()
 export class UsersService {
@@ -16,16 +16,8 @@ export class UsersService {
       headers: { authorization: `Bearer ${accessToken}` },
     };
 
-    const response = await lastValueFrom(this.httpService.request<GetUsersDto[]>(options).pipe(
-      map(({ data }) => data.map(item => ({
-        IdUser: item.user_id,
-        Name: item.name,
-        NickName: item.nickname,
-        Email: item.email,
-        Picture: item.picture,
-        CreatedAt: item.created_at,
-        LastLogin: item.last_login,
-      }))),
+    const response = await lastValueFrom(this.httpService.request<UserModel[]>(options).pipe(
+      map(({ data }) => data.map(item => new UserModel(item))),
     ));
 
     return response;

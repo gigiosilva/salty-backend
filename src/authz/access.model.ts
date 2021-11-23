@@ -1,6 +1,6 @@
 import { IsString, IsNumber } from 'class-validator';
 
-export class GetAccessDto {
+export class AccessModel {
   @IsString()
   access_token: string;
 

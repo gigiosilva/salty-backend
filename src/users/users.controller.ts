@@ -11,10 +11,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 
 import { AuthzService } from '../authz/authz.service';
-import { GetAccessDto } from '../authz/dto/get-access-dto';
+import { AccessModel } from '../authz/access.model';
 
 import { UsersService } from './users.service';
-import { UserDto } from './dto/user-dto';
+import { UserModel } from './user.model';
 
 @ApiTags('Users')
 @ApiHeader({
@@ -33,14 +33,14 @@ export class UsersController {
 
     @ApiOperation({ summary: 'Get users' })
     @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
-    @ApiOkResponse({ description: 'Get all users.', type: UserDto, isArray: true })
+    @ApiOkResponse({ description: 'Get all users.', type: UserModel, isArray: true })
     @UseGuards(AuthGuard('jwt'))
     @Get()
     async getUsers() {
       this.logger.verbose('Retrieving all users from Auth0');
 
       // @TODO - apply strategy to not ask for the token in each request.
-      const access: GetAccessDto = await this.authzService.getAccess();
+      const access: AccessModel = await this.authzService.getAccess();
 
       const users = await this.usersService.getUsers(access.access_token);
 

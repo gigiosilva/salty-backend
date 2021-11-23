@@ -3,13 +3,13 @@ import { HttpService } from '@nestjs/axios';
 import { Method } from 'axios';
 import { map, lastValueFrom } from 'rxjs';
 
-import { GetAccessDto } from './dto/get-access-dto';
+import { AccessModel } from './access.model';
 
 @Injectable()
 export class AuthzService {
   constructor(private httpService: HttpService) {}
 
-  async getAccess(): Promise<GetAccessDto> {
+  async getAccess(): Promise<AccessModel> {
     const options = {
       method: 'POST' as Method,
       url: `${process.env.AUTH0_ISSUER_URL}oauth/token`,
@@ -22,7 +22,7 @@ export class AuthzService {
       },
     };
 
-    const data: GetAccessDto = await lastValueFrom(this.httpService.request(options).pipe(
+    const data: AccessModel = await lastValueFrom(this.httpService.request(options).pipe(
       map(response => response.data),
     ));
 
