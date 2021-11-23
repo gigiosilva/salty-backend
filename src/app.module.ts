@@ -6,6 +6,8 @@ import * as Joi from 'joi';
 import DatabaseConfig from '../ormconfig';
 
 import { FoodPlacesModule } from './food-places/food-places.module';
+import { UsersModule } from './users/users.module';
+import { AuthzModule } from './authz/authz.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { FoodPlacesModule } from './food-places/food-places.module';
     }),
     TypeOrmModule.forRoot(DatabaseConfig),
     FoodPlacesModule,
+    UsersModule,
+    AuthzModule,
   ],
 })
 export class AppModule {}
