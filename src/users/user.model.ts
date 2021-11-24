@@ -2,41 +2,41 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
 export class UserModel {
-  constructor(item) {
-    this.IdUser = item.user_id;
-    this.Name = item.name;
-    this.NickName = item.nickname;
-    this.Email = item.email;
-    this.Picture = item.picture;
-    this.CreatedAt = item.created_at;
-    this.LastLogin = item.last_login;
+  constructor(user) {
+    this.idUser = user.user_id;
+    this.name = user.name;
+    this.nickName = user.nickname;
+    this.email = user.email;
+    this.picture = user.picture;
+    this.createdAt = user.created_at;
+    this.lastLogin = user.last_login;
   }
 
   @ApiProperty()
   @IsString()
-  IdUser: string;
+  idUser: string;
 
   @ApiProperty()
   @IsString()
-  Name: string;
+  name: string;
 
   @ApiProperty()
   @IsString()
-  NickName: string;
+  nickName: string;
 
   @ApiProperty()
   @IsString()
-  Email: string;
+  email: string;
 
   @ApiProperty()
   @IsString()
-  Picture: string;
+  picture: string;
 
   @ApiProperty()
   @IsString()
-  CreatedAt: string;
+  createdAt: string;
 
   @ApiProperty()
   @IsString()
-  LastLogin: string;
+  lastLogin: string;
 }
