@@ -21,7 +21,7 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.js', 'ormconfig.js'],
+  ignorePatterns: ['.eslintrc.js', 'ormconfig.js', '*/migration/*.ts'],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -118,6 +118,7 @@ module.exports = {
     'linebreak-style': 'off',
     'prettier/prettier': 'off',
     'camelcase': 'off',
+    "no-shadow": 'off',
   },
   settings: {
     'import/resolver': {

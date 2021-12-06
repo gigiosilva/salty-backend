@@ -9,5 +9,6 @@ import { FoodPlacesRepository } from './food-places.repository';
   imports: [TypeOrmModule.forFeature([FoodPlacesRepository])],
   providers: [FoodPlacesService],
   controllers: [FoodPlacesController],
+  exports: [FoodPlacesService],
 })
 export class FoodPlacesModule {}

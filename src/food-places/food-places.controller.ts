@@ -11,7 +11,7 @@ import { GetFoodPlacesFilterDto } from './dto/get-food-places-filter.dto';
 import { FoodPlace } from './food-place.entity';
 import { FoodPlacesService } from './food-places.service';
 
-@ApiTags('Food places')
+@ApiTags('Food Places')
 @Controller('food-places')
 export class FoodPlacesController {
   private logger = new Logger('FoodPlacesController', { timestamp: true });
