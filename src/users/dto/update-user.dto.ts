@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsObject } from 'class-validator';
+import { IsBoolean } from 'class-validator';
 
 export class UpdateUserDto {
   @ApiProperty()
-  @IsObject()
-  metadata: any;
+  @IsBoolean()
+  isRegistrationComplete: boolean;
 }

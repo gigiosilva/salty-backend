@@ -38,13 +38,15 @@ export class UsersService {
     return user;
   }
 
-  async updateUser(accessToken, userId, responseBody: UpdateUserDto): Promise<any> {
+  async updateUser(accessToken, userId, { isRegistrationComplete }: UpdateUserDto): Promise<any> {
     const options = {
       method: 'PATCH' as Method,
       url: `${process.env.AUTH0_AUDIENCE}users/${userId}`,
       headers: { authorization: `Bearer ${accessToken}` },
       data: {
-        user_metadata: responseBody.metadata,
+        user_metadata: {
+          isRegistrationComplete,
+        },
       },
     };
 
