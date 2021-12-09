@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsBoolean, IsString } from 'class-validator';
 
 export class UserModel {
   constructor(user) {
@@ -10,6 +10,7 @@ export class UserModel {
     this.picture = user.picture;
     this.createdAt = user.created_at;
     this.lastLogin = user.last_login;
+    this.isRegistrationComplete = user?.user_metadata?.isRegistrationComplete ?? false;
   }
 
   @ApiProperty()
@@ -39,4 +40,8 @@ export class UserModel {
   @ApiProperty()
   @IsString()
   lastLogin: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  isRegistrationComplete: boolean;
 }

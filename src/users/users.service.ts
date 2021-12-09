@@ -4,6 +4,7 @@ import { Method } from 'axios';
 import { map, lastValueFrom } from 'rxjs';
 
 import { UserModel } from './user.model';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -21,5 +22,38 @@ export class UsersService {
     ));
 
     return response;
+  }
+
+  async getUser(accessToken, userId): Promise<any> {
+    const options = {
+      method: 'GET' as Method,
+      url: `${process.env.AUTH0_AUDIENCE}users/${userId}`,
+      headers: { authorization: `Bearer ${accessToken}` },
+    };
+
+    const user = await this.httpService.request<UserModel[]>(options).pipe(
+      map(response => response.data),
+    );
+
+    return user;
+  }
+
+  async updateUser(accessToken, userId, { isRegistrationComplete }: UpdateUserDto): Promise<any> {
+    const options = {
+      method: 'PATCH' as Method,
+      url: `${process.env.AUTH0_AUDIENCE}users/${userId}`,
+      headers: { authorization: `Bearer ${accessToken}` },
+      data: {
+        user_metadata: {
+          isRegistrationComplete,
+        },
+      },
+    };
+
+    const user = await this.httpService.request<UserModel[]>(options).pipe(
+      map(response => response.data),
+    );
+
+    return user;
   }
 }

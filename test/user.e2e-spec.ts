@@ -10,6 +10,8 @@ import { UsersService } from '../src/users/users.service';
 
 const usersServiceMock = {
   getUsers: jest.fn(),
+  getUser: jest.fn(),
+  updateUser: jest.fn(),
 };
 
 const authzServiceMock = {
@@ -66,6 +68,50 @@ describe('** USER ROUTES **', () => {
         .get('/users')
         .expect(200)
         .expect(expectedUsers);
+    });
+  });
+
+  describe('GET /users/:id', () => {
+    const expectedUser = {
+      IdUser: 'mock_id',
+      Name: 'name_mock',
+      NickName: 'nickname',
+      Email: 'email@mock.com',
+      Picture: 'picture_mock',
+      CreatedAt: 'create_at_mock',
+      LastLogin: 'last_login_mock',
+    };
+
+    it('should return user', async () => {
+      authzServiceMock.getAccess.mockResolvedValue({ access_token: 'mock' });
+      usersServiceMock.getUser.mockResolvedValue(expectedUser);
+
+      return request(app.getHttpServer())
+        .get('/users/id')
+        .expect(200)
+        .expect(expectedUser);
+    });
+  });
+
+  describe('PUT /users/:id', () => {
+    const expectedUser = {
+      IdUser: 'mock_id',
+      Name: 'name_mock',
+      NickName: 'nickname',
+      Email: 'email@mock.com',
+      Picture: 'picture_mock',
+      CreatedAt: 'create_at_mock',
+      LastLogin: 'last_login_mock',
+    };
+
+    it('should update user', async () => {
+      authzServiceMock.getAccess.mockResolvedValue({ access_token: 'mock' });
+      usersServiceMock.updateUser.mockResolvedValue(expectedUser);
+
+      return request(app.getHttpServer())
+        .put('/users/id')
+        .expect(200)
+        .expect(expectedUser);
     });
   });
 
