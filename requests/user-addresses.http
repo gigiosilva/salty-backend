@@ -1,0 +1,33 @@
+### GET USER-ADDRESSES
+GET http://localhost:3000/users/1312/addresses
+
+### DELETE USER-ADDRESS BY ID
+DELETE http://localhost:3000/users/13411/addresses
+
+### UPDATE USER-ADDRESS
+PUT http://localhost:3000/users/1312/addresses
+content-type: application/json
+
+{
+  "foodPlaceId": "824767d5-18da-4fa8-b102-73ad9b5e2645"
+}
+
+### ADD USER-ADDRESS
+POST http://localhost:3000/users/1341132/addresses
+content-type: application/json
+
+{
+  "name": "Pedidos Ya",
+  "street": "Pedidos Ya",
+  "district": "Pedidos Ya",
+  "city": "Pedidos Ya",
+  "state": "Pedidos Ya",
+  "country": "Pedidos Ya",
+  "zipCode": "Pedidos Ya",
+  "complement": "Pedidos Ya",
+  "longAddress": "Pedidos Ya",
+  "latitude": "Pedidos Ya",
+  "longitude": "Pedidos Ya",
+  "foodPlaceId": "24688f71-6267-4bc7-8d1d-1dae04a4e296",
+  "weekAvailability": ["MONDAY"]
+}
