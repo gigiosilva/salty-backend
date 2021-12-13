@@ -8,7 +8,7 @@ import DatabaseConfig from '../ormconfig';
 import { FoodPlacesModule } from './food-places/food-places.module';
 import { UsersModule } from './users/users.module';
 import { AuthzModule } from './authz/authz.module';
-import { UserAddressModule } from './user-address/user-address.module';
+import { UserAddressModule } from './user-address/user-addresses.module';
 import { UserPreferencesModule } from './user-preferences/user-preferences.module';
 
 @Module({
