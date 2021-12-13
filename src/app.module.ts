@@ -9,6 +9,7 @@ import { FoodPlacesModule } from './food-places/food-places.module';
 import { UsersModule } from './users/users.module';
 import { AuthzModule } from './authz/authz.module';
 import { UserAddressModule } from './user-address/user-address.module';
+import { UserPreferencesModule } from './user-preferences/user-preferences.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UserAddressModule } from './user-address/user-address.module';
     UsersModule,
     AuthzModule,
     UserAddressModule,
+    UserPreferencesModule,
   ],
 })
 export class AppModule {}

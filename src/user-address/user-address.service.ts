@@ -10,7 +10,6 @@ import { UserAddress } from './user-address.entity';
 import { CreateUserAddressDto } from './dto/create-user-address.dto';
 import { UserAddressesRepository } from './user-addresses.repository';
 import { UpdateUserAddressDto } from './dto/update-user-address.dto';
-// import { UpdateUserAddressDto } from './dto/update-user-address.dto';
 
 @Injectable()
 export class UserAddressService {
