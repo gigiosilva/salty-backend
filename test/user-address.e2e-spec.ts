@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 
 import { FoodPlacesRepository } from '../src/food-places/food-places.repository';
-import { UserAddressModule } from '../src/user-address/user-address.module';
+import { UserAddressModule } from '../src/user-address/user-addresses.module';
 import { UserAddressesRepository } from '../src/user-address/user-addresses.repository';
 
 const userAddressesRepoMock = {

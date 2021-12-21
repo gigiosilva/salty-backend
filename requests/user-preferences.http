@@ -1,0 +1,24 @@
+### GET USER-PREFERENCES
+GET http://localhost:3000/users/1341132/preferences
+
+### DELETE USER-PREFERENCES BY ID
+DELETE http://localhost:3000/users/1341132/preferences
+
+### UPDATE USER-PREFERENCES
+PUT http://localhost:3000/users/1341132/preferences
+content-type: application/json
+
+{
+  "preferences": [],
+  "comments": "Ese es mi comentario 2"
+}
+
+### ADD USER-PREFERENCES
+POST http://localhost:3000/users/1341132/preferences
+content-type: application/json
+
+{
+  "preferences": ["gluten free", "vegan"],
+  "comments": "Ese es mi comentario",
+  "isDelivery": "true"
+}
