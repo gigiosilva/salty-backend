@@ -1,0 +1,26 @@
+### GET FAQS
+GET http://localhost:3000/faqs
+
+### GET FAQ BY ID
+GET http://localhost:3000/faqs/590b4524-abbe-4cdb-8405-7f5c4c35e417
+
+### DELETE FAQ BY ID
+DELETE http://localhost:3000/faqs/590b4524-abbe-4cdb-8405-7f5c4c35e417
+
+### UPDATE USER-ADDRESS
+PUT http://localhost:3000/faqs/dfaafbf4-2ddf-468a-a378-4e6a8f4ea6aa
+content-type: application/json
+
+{
+  "description": "You can choose by choosing chosen by you"
+}
+
+### ADD FAQ
+POST http://localhost:3000/faqs
+content-type: application/json
+
+{
+  "title": "How to choose friend?",
+  "description": "You can choose by choosing",
+  "category": "Friends"
+}
