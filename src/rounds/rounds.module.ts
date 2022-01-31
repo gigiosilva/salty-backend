@@ -9,5 +9,6 @@ import { RoundsRepository } from './rounds.repository';
   imports: [TypeOrmModule.forFeature([RoundsRepository])],
   controllers: [RoundsController],
   providers: [RoundsService],
+  exports: [RoundsService],
 })
 export class RoundsModule {}

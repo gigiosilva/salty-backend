@@ -12,6 +12,7 @@ import { UserAddressModule } from './user-address/user-addresses.module';
 import { UserPreferencesModule } from './user-preferences/user-preferences.module';
 import { RoundsModule } from './rounds/rounds.module';
 import { FaqsModule } from './faqs/faqs.module';
+import { UserFriendsModule } from './user-friends/user-friends.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { FaqsModule } from './faqs/faqs.module';
     UserPreferencesModule,
     RoundsModule,
     FaqsModule,
+    UserFriendsModule,
   ],
 })
 export class AppModule {}
