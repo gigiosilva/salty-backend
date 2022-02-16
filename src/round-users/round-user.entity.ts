@@ -2,11 +2,11 @@ import {
   Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique,
 } from 'typeorm';
 
-import { Round } from './../rounds/round.entity';
+import { Round } from '../rounds/round.entity';
 
-@Entity('user_friends')
+@Entity('round_users')
 @Unique(['userId', 'friendId', 'round'])
-export class UserFriend {
+export class RoundUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -17,6 +17,7 @@ export class UserFriend {
 
   @Column({
     name: 'friend_id',
+    nullable: true,
   })
   friendId: string;
 

@@ -1,0 +1,31 @@
+### GET ROUND-USERS
+GET http://localhost:3000/rounds/515984d4-cfde-4ddb-9203-fc4355590f23/users
+
+### GET ROUND-USERS
+GET http://localhost:3000/rounds/515984d4-cfde-4ddb-9203-fc4355590f23/users/13411327
+
+### DELETE ROUND-USERS BY ID
+DELETE http://localhost:3000/rounds/515984d4-cfde-4ddb-9203-fc4355590f23/users/13411327
+
+### UPDATE ROUND-USERS
+PUT http://localhost:3000/rounds/515984d4-cfde-4ddb-9203-fc4355590f23/users/125
+content-type: application/json
+
+{
+  "friendId": "1341132",
+  "giftPhoto": "",
+  "giftDescription": "Ese es mi comentario 2",
+  "giftDate": "2022-01-20T00:00:00.000Z",
+  "hasGift": true
+}
+
+### ADD ROUND-USERS
+POST http://localhost:3000/rounds/515984d4-cfde-4ddb-9203-fc4355590f23/users/125
+content-type: application/json
+
+{
+  "giftPhoto": "",
+  "giftDescription": "Ese es mi comentario 2",
+  "giftDate": "2022-01-20T00:00:00.000Z",
+  "hasGift": true
+}

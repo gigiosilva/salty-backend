@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateUserFriendDto {
+export class CreateRoundUserDto {
+  @ApiProperty()
+  readonly friendId: string;
+
   @ApiProperty()
   readonly giftPhoto: string;
 

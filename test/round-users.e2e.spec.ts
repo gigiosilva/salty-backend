@@ -3,15 +3,15 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 
 import { RoundsRepository } from '../src/rounds/rounds.repository';
-import { UserFriendsRepository } from '../src/user-friends/user-friends.repository';
-import { UserFriendsModule } from '../src/user-friends/user-friends.module';
+import { RoundUsersRepository } from '../src/round-users/round-users.repository';
+import { RoundUsersModule } from '../src/round-users/round-users.module';
 
-const userFriendsRepoMock = {
+const roundUsersRepoMock = {
   delete: jest.fn(),
   findOne: jest.fn(),
   find: jest.fn(),
   save: jest.fn(),
-  createUserFriend: jest.fn(),
+  createRoundUser: jest.fn(),
   createQueryBuilder: {
     getMany: jest.fn(),
   },
@@ -22,21 +22,21 @@ const roundsRepoMock = {
   findOne: jest.fn(),
   find: jest.fn(),
   save: jest.fn(),
-  createUserFriend: jest.fn(),
+  createRoundUser: jest.fn(),
   createQueryBuilder: {
     getMany: jest.fn(),
   },
 };
 
-describe('** USER FRIENDS ROUTES **', () => {
+describe('** ROUND USERS ROUTES **', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [UserFriendsModule],
+      imports: [RoundUsersModule],
     })
-      .overrideProvider(UserFriendsRepository)
-      .useValue(userFriendsRepoMock)
+      .overrideProvider(RoundUsersRepository)
+      .useValue(roundUsersRepoMock)
       .overrideProvider(RoundsRepository)
       .useValue(roundsRepoMock)
       .compile();
@@ -45,7 +45,7 @@ describe('** USER FRIENDS ROUTES **', () => {
     await app.init();
   });
 
-  describe('GET /users/:userId/rounds/:roundId', () => {
+  describe('GET /rounds/:roundId/users/:userId', () => {
     const expectedRound = {
       id: '515984d4-cfde-4ddb-9203-fc4355590f23',
       createdBy: '5c9f8f8f-f912-4b4e-9016-4ef9c28bec06',
@@ -57,7 +57,7 @@ describe('** USER FRIENDS ROUTES **', () => {
       createdAt: '2022-01-11T20:02:55.208Z',
     };
 
-    const expectedUserFriend = {
+    const expectedRoundUser = {
       id: '8517b65a-5e0c-4da8-bfa5-05c99a667e34',
       userId: '1341132',
       friendId: 'tesdde23',
@@ -69,33 +69,33 @@ describe('** USER FRIENDS ROUTES **', () => {
       round: expectedRound,
     };
 
-    it('should return an user friend', async () => {
+    it('should return an round user', async () => {
       roundsRepoMock.findOne.mockResolvedValue(expectedRound);
-      userFriendsRepoMock.findOne.mockResolvedValue(expectedUserFriend);
+      roundUsersRepoMock.findOne.mockResolvedValue(expectedRoundUser);
 
       return request(app.getHttpServer())
-        .get('/users/1341132/rounds/515984d4-cfde-4ddb-9203-fc4355590f23')
+        .get('/rounds/515984d4-cfde-4ddb-9203-fc4355590f23/users/1341132')
         .expect(200)
-        .expect(expectedUserFriend);
+        .expect(expectedRoundUser);
     });
   });
 
-  describe('DELETE /users/:userId/rounds/:roundId', () => {
-    it('should delete an user friend', async () => {
+  describe('DELETE /rounds/:roundId/users/:userId', () => {
+    it('should delete an round user', async () => {
       roundsRepoMock.findOne.mockResolvedValue({});
-      userFriendsRepoMock.delete.mockResolvedValue({
+      roundUsersRepoMock.delete.mockResolvedValue({
         affected: 1,
       });
 
       await request(app.getHttpServer())
-        .delete('/users/1243/rounds/515984d4-cfde-4ddb-9203-fc4355590f23')
+        .delete('/rounds/515984d4-cfde-4ddb-9203-fc4355590f23/users/1243')
         .expect(200);
 
-      expect(userFriendsRepoMock.delete).toBeCalled();
+      expect(roundUsersRepoMock.delete).toBeCalled();
     });
   });
 
-  describe('PUT /users/:userId/rounds/:roundId', () => {
+  describe('PUT /rounds/:roundId/users/:userId', () => {
     const expectedRound = {
       id: '515984d4-cfde-4ddb-9203-fc4355590f23',
       createdBy: '5c9f8f8f-f912-4b4e-9016-4ef9c28bec06',
@@ -107,7 +107,7 @@ describe('** USER FRIENDS ROUTES **', () => {
       createdAt: '2022-01-11T20:02:55.208Z',
     };
 
-    const newUserFriend = {
+    const newRoundUser = {
       id: '8517b65a-5e0c-4da8-bfa5-05c99a667e34',
       userId: '1341132',
       friendId: 'tesdde23',
@@ -119,7 +119,7 @@ describe('** USER FRIENDS ROUTES **', () => {
       round: expectedRound,
     };
 
-    const updatedUserFriend = {
+    const updatedRoundUser = {
       id: '8517b65a-5e0c-4da8-bfa5-05c99a667e34',
       userId: '1341132',
       friendId: 'tesdde23',
@@ -131,16 +131,16 @@ describe('** USER FRIENDS ROUTES **', () => {
       round: expectedRound,
     };
 
-    it('should update an user friend', async () => {
+    it('should update an round user', async () => {
       roundsRepoMock.findOne.mockResolvedValue(expectedRound);
-      userFriendsRepoMock.findOne.mockResolvedValue(updatedUserFriend);
-      userFriendsRepoMock.save.mockResolvedValue(updatedUserFriend);
+      roundUsersRepoMock.findOne.mockResolvedValue(updatedRoundUser);
+      roundUsersRepoMock.save.mockResolvedValue(updatedRoundUser);
 
       await request(app.getHttpServer())
-        .put('/users/1243/rounds/515984d4-cfde-4ddb-9203-fc4355590f23')
-        .send(newUserFriend)
+        .put('/rounds/515984d4-cfde-4ddb-9203-fc4355590f23/users/1243')
+        .send(newRoundUser)
         .expect(200)
-        .expect(updatedUserFriend);
+        .expect(updatedRoundUser);
     });
   });
 
