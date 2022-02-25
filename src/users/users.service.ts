@@ -4,7 +4,6 @@ import { Method } from 'axios';
 import { map, lastValueFrom } from 'rxjs';
 
 import { UserModel } from './user.model';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -38,7 +37,7 @@ export class UsersService {
     return user;
   }
 
-  async updateUser(accessToken, userId, { isRegistrationComplete }: UpdateUserDto): Promise<any> {
+  async updateUser(accessToken, userId, { isRegistrationComplete, phoneNumber }): Promise<any> {
     const options = {
       method: 'PATCH' as Method,
       url: `${process.env.AUTH0_AUDIENCE}users/${userId}`,
@@ -46,6 +45,7 @@ export class UsersService {
       data: {
         user_metadata: {
           isRegistrationComplete,
+          phoneNumber,
         },
       },
     };

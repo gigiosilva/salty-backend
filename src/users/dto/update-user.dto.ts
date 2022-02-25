@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class UpdateUserDto {
   @ApiProperty()
-  @IsBoolean()
-  isRegistrationComplete: boolean;
+  @IsString()
+  phoneNumber: string;
 }

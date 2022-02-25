@@ -75,7 +75,12 @@ export class UsersController {
 
       const access: AccessModel = await this.authzService.getAccess();
 
-      const user = await this.usersService.updateUser(access.access_token, id, body);
+      const metadata = {
+        isRegistrationComplete: true,
+        phoneNumber: body.phoneNumber,
+      };
+
+      const user = await this.usersService.updateUser(access.access_token, id, metadata);
 
       return user;
     }
