@@ -13,7 +13,7 @@ import { UpdateRoundUserDto } from './dto/update-round-user.dto';
 
 @Injectable()
 export class RoundUsersService {
-  private logger = new Logger('RoundUsersRepository', { timestamp: true });
+  private logger = new Logger('RoundUsersService', { timestamp: true });
 
   constructor(
     @InjectRepository(RoundUsersRepository)

@@ -1,20 +1,34 @@
 import {
-  Controller, Get, Post, Body, Put, Param, Delete,
+  Controller, Get, Post, Body, Put, Param, Delete, OnApplicationBootstrap,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { RoundsService } from './rounds.service';
 import { CreateRoundDto } from './dto/create-round.dto';
 import { UpdateRoundDto } from './dto/update-round.dto';
+import { RoundSchedulerService } from './round-scheduler.service';
+import { Round } from './round.entity';
 
 @ApiTags('Rounds')
 @Controller('rounds')
-export class RoundsController {
-  constructor(private readonly roundsService: RoundsService) {}
+export class RoundsController implements OnApplicationBootstrap {
+  constructor(
+    private readonly roundsService: RoundsService,
+    private readonly roundSchedulerService: RoundSchedulerService,
+  ) {}
+
+  async onApplicationBootstrap() {
+    const rounds: Round[] = await this.roundsService.getActiveRounds();
+    this.roundSchedulerService.initRoundSchedules(rounds);
+    this.roundsService.deactiveOldRounds(rounds);
+  }
 
   @Post()
-  create(@Body() createRoundDto: CreateRoundDto) {
-    return this.roundsService.create(createRoundDto);
+  async create(@Body() createRoundDto: CreateRoundDto) {
+    const round = await this.roundsService.create(createRoundDto);
+    this.roundSchedulerService.scheduleRound(round);
+
+    return round;
   }
 
   @Get()
@@ -33,7 +47,8 @@ export class RoundsController {
   }
 
   @Delete(':id')
-  deleteRound(@Param('id') id: string) {
-    return this.roundsService.remove(id);
+  async deleteRound(@Param('id') id: string) {
+    await this.roundsService.remove(id);
+    this.roundSchedulerService.cancelScheduledRound(id);
   }
 }

@@ -118,7 +118,8 @@ module.exports = {
     'linebreak-style': 'off',
     'prettier/prettier': 'off',
     'camelcase': 'off',
-    "no-shadow": 'off',
+    'no-shadow': 'off',
+    'no-restricted-syntax': 'off',
   },
   settings: {
     'import/resolver': {

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import * as Joi from 'joi';
 
 import DatabaseConfig from '../ormconfig';
@@ -24,6 +25,7 @@ import { RoundUsersModule } from './round-users/round-users.module';
       }),
     }),
     TypeOrmModule.forRoot(DatabaseConfig),
+    ScheduleModule.forRoot(),
     FoodPlacesModule,
     UsersModule,
     AuthzModule,

@@ -5,7 +5,7 @@ GET http://localhost:3000/rounds
 GET http://localhost:3000/rounds/ed6442f5-339a-4a02-b8a7-268396e3105a
 
 ### DELETE ROUND BY ID
-DELETE http://localhost:3000/rounds/c0b794e6-9063-48e3-8a07-33c701s30d6e
+DELETE http://localhost:3000/rounds/a37ad7f9-d089-48d9-838a-fcb392b755c9
 
 ### UPDATE ROUND
 PUT http://localhost:3000/rounds/ed6442f5-339a-4a02-b8a7-268396e3105a
@@ -21,9 +21,9 @@ content-type: application/json
 
 {
   "createdBy": "5c9f8f8f-f912-4b4e-9016-4ef9c28bec06",
-  "name": "Round 1",
-  "startDate": "2022-01-11T00:00:00.000Z",
-  "endDate": "2022-01-20T00:00:00.000Z",
+  "name": "Round 15",
+  "startDate": "2022-03-16T17:27:00.548Z",
+  "endDate": "2022-03-16T17:28:00.000Z",
   "comments": "The best round ever",
   "isActive": true
 }

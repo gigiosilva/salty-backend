@@ -13,7 +13,7 @@ import { UpdateUserAddressDto } from './dto/update-user-address.dto';
 
 @Injectable()
 export class UserAddressService {
-  private logger = new Logger('UserAddressesRepository', { timestamp: true });
+  private logger = new Logger('UserAddressService', { timestamp: true });
 
   constructor(
     @InjectRepository(UserAddressesRepository)

@@ -10,7 +10,7 @@ import { UserPreferencesRepository } from './user-preferences.repository';
 
 @Injectable()
 export class UserPreferencesService {
-  private logger = new Logger('UserAddressesRepository', { timestamp: true });
+  private logger = new Logger('UserPreferencesService', { timestamp: true });
 
   constructor(
     @InjectRepository(UserPreferencesRepository)

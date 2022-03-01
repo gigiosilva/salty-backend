@@ -10,7 +10,7 @@ import { RoundsRepository } from './rounds.repository';
 
 @Injectable()
 export class RoundsService {
-  private logger = new Logger('UserAddressesRepository', { timestamp: true });
+  private logger = new Logger('RoundsService', { timestamp: true });
 
   constructor(
     @InjectRepository(RoundsRepository)
@@ -19,7 +19,9 @@ export class RoundsService {
 
   async create(createRoundDto: CreateRoundDto) {
     try {
-      return await this.roundsRepository.createRound(createRoundDto);
+      const round = await this.roundsRepository.createRound(createRoundDto);
+
+      return round;
     } catch (error) {
       this.logger.error(error);
       this.logger.error(error.stack);
@@ -29,6 +31,16 @@ export class RoundsService {
 
   async getAllRounds() {
     const rounds = await this.roundsRepository.find();
+
+    return rounds;
+  }
+
+  async getActiveRounds() {
+    const rounds = await this.roundsRepository.find({
+      where: {
+        isActive: true,
+      },
+    });
 
     return rounds;
   }
@@ -62,6 +74,23 @@ export class RoundsService {
       this.logger.error(error.stack);
 
       throw new InternalServerErrorException(error.message);
+    }
+  }
+
+  async startRound(round: Round) {
+    this.logger.log(`Round Started ${JSON.stringify(round)}`);
+    // get round users
+    // draw users
+  }
+
+  async endRound(round: Round) {
+    this.logger.log(`Round finished ${JSON.stringify(round)}`);
+    await this.updateRound(round.id, { isActive: false });
+  }
+
+  async deactiveOldRounds(activeRounds: Round[]) {
+    for (const round of activeRounds) {
+      if (round.endDate <= new Date()) this.endRound(round);
     }
   }
 }
