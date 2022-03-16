@@ -14,11 +14,11 @@ export class RoundSchedulerService {
     private schedulerRegistry: SchedulerRegistry,
   ) {}
 
-  scheduleRound(round: Round) {
+  async scheduleRound(round: Round) {
     const startRoundDate = new Date(round.startDate);
     const endRoundDate = new Date(round.endDate);
 
-    const startRoundjob = new CronJob(startRoundDate, () => {
+    const startRoundjob = new CronJob(startRoundDate, async () => {
       this.roundsService.startRound(round);
     });
     const endRoundjob = new CronJob(endRoundDate, () => {

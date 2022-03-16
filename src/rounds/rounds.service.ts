@@ -3,6 +3,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
+import { RoundUser } from './../round-users/round-user.entity';
+import { RoundUsersService } from './../round-users/round-users.service';
 import { CreateRoundDto } from './dto/create-round.dto';
 import { UpdateRoundDto } from './dto/update-round.dto';
 import { Round } from './round.entity';
@@ -15,6 +17,7 @@ export class RoundsService {
   constructor(
     @InjectRepository(RoundsRepository)
     private roundsRepository: RoundsRepository,
+    private roundUsersService: RoundUsersService,
   ) {}
 
   async create(createRoundDto: CreateRoundDto) {
@@ -79,12 +82,15 @@ export class RoundsService {
 
   async startRound(round: Round) {
     this.logger.log(`Round Started ${JSON.stringify(round)}`);
-    // get round users
-    // draw users
+    const roundUsers = await this.roundUsersService.findAll(round.id);
+    if (!roundUsers.length) return;
+
+    const drawnUsers = this.drawRound(round, roundUsers);
+    this.logger.verbose(`Drawn users ${JSON.stringify(drawnUsers.map(user => ({ userId: user.userId, friendId: user.friendId })))}`);
+    // we can send email or slack message here
   }
 
   async endRound(round: Round) {
-    this.logger.log(`Round finished ${JSON.stringify(round)}`);
     await this.updateRound(round.id, { isActive: false });
   }
 
@@ -92,5 +98,29 @@ export class RoundsService {
     for (const round of activeRounds) {
       if (round.endDate <= new Date()) this.endRound(round);
     }
+  }
+
+  drawRound(round: Round, roundUsers: RoundUser[]) {
+    this.logger.log(`Drawing round ${JSON.stringify(round)}`);
+
+    const drawnUsers = [...roundUsers];
+
+    roundUsers.forEach((roundUser, i) => {
+      if (roundUser.friendId) return roundUser;
+
+      const notDrawnUsers = drawnUsers.filter(
+        // remove users already drawn
+        user => drawnUsers.find(drawnUser => drawnUser.friendId === user.userId) === undefined
+        // remove own user
+        && user.userId !== roundUser.userId,
+      );
+
+      const drawIndex = Math.floor(Math.random() * notDrawnUsers.length);
+
+      drawnUsers[i].friendId = notDrawnUsers[drawIndex]?.userId || null;
+      this.roundUsersService.update(drawnUsers[i].userId, drawnUsers[i].roundId, drawnUsers[i]);
+    });
+
+    return drawnUsers;
   }
 }

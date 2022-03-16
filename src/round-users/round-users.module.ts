@@ -15,5 +15,6 @@ import { RoundUsersRepository } from './round-users.repository';
   ],
   controllers: [RoundUsersController],
   providers: [RoundUsersService, RoundsService],
+  exports: [RoundUsersService],
 })
 export class RoundUsersModule {}

@@ -120,6 +120,9 @@ module.exports = {
     'camelcase': 'off',
     'no-shadow': 'off',
     'no-restricted-syntax': 'off',
+    'no-param-reassign': 'off',
+    'security/detect-object-injection': 'off',
+    'consistent-return': 'off',
   },
   settings: {
     'import/resolver': {

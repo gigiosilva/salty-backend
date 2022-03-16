@@ -22,8 +22,8 @@ content-type: application/json
 {
   "createdBy": "5c9f8f8f-f912-4b4e-9016-4ef9c28bec06",
   "name": "Round 15",
-  "startDate": "2022-03-16T17:27:00.548Z",
-  "endDate": "2022-03-16T17:28:00.000Z",
+  "startDate": "2022-03-16T17:50:00.548Z",
+  "endDate": "2022-03-16T17:52:00.000Z",
   "comments": "The best round ever",
   "isActive": true
 }

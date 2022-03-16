@@ -3,9 +3,6 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { RoundsService } from '../rounds/rounds.service';
-import { Round } from '../rounds/round.entity';
-
 import { CreateRoundUserDto } from './dto/create-round-user.dto';
 import { RoundUsersRepository } from './round-users.repository';
 import { RoundUser } from './round-user.entity';
@@ -18,14 +15,11 @@ export class RoundUsersService {
   constructor(
     @InjectRepository(RoundUsersRepository)
     private roundUsersRepository: RoundUsersRepository,
-    private roundsService: RoundsService,
   ) {}
 
   async create(userId: string, roundId: string, createRoundUserDto: CreateRoundUserDto) {
     try {
-      const round: Round = await this.roundsService.getRoundById(roundId);
-
-      return await this.roundUsersRepository.createRoundUser(userId, round, createRoundUserDto);
+      return await this.roundUsersRepository.createRoundUser(userId, roundId, createRoundUserDto);
     } catch (error) {
       this.logger.error(error);
       if (error.code === '23505') { throw new ConflictException('RoundUser already exists'); }
@@ -36,16 +30,11 @@ export class RoundUsersService {
   }
 
   async findOne(userId: string, roundId: string) {
-    const round: Round = await this.roundsService.getRoundById(roundId);
-    if (!round) throw new NotFoundException();
-
-    return this.roundUsersRepository.findOne({ where: { userId, round } });
+    return this.roundUsersRepository.findOne({ where: { userId, roundId } });
   }
 
   async findAll(roundId: string) {
-    const round: Round = await this.roundsService.getRoundById(roundId);
-
-    return this.roundUsersRepository.find({ round });
+    return this.roundUsersRepository.find({ roundId });
   }
 
   async update(userId: string, roundId: string, updateRoundUserDto: UpdateRoundUserDto) {
@@ -60,10 +49,7 @@ export class RoundUsersService {
   }
 
   async remove(userId: string, roundId: string) {
-    const round: Round = await this.roundsService.getRoundById(roundId);
-    if (!round) throw new NotFoundException();
-
-    const result = await this.roundUsersRepository.delete({ userId, round });
+    const result = await this.roundUsersRepository.delete({ userId, roundId });
 
     if (result.affected === 0) {
       throw new NotFoundException();

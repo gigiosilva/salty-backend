@@ -21,6 +21,12 @@ export class RoundUser {
   })
   friendId: string;
 
+  @Column({
+    name: 'round_id',
+    nullable: true,
+  })
+  roundId: string;
+
   @ManyToOne(() => Round, round => round.id, { nullable: true, eager: true, onDelete: 'CASCADE' })
   @JoinColumn([
     { name: 'round_id', referencedColumnName: 'id' },
