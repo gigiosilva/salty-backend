@@ -5,4 +5,6 @@ export class UpdateUserDto {
   @ApiProperty()
   @IsString()
   phoneNumber: string;
+
+  isRegistrationComplete: boolean;
 }
