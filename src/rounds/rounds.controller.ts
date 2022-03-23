@@ -51,4 +51,14 @@ export class RoundsController implements OnApplicationBootstrap {
     await this.roundsService.remove(id);
     this.roundSchedulerService.cancelScheduledRound(id);
   }
+
+  @Post(':id/draw')
+  async draw(
+    @Param('id') roundId: string,
+  ) {
+    const round = await this.roundsService.getRoundById(roundId);
+    const drawnUsers = await this.roundsService.startRound(round);
+
+    return drawnUsers;
+  }
 }

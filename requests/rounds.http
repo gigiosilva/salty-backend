@@ -27,3 +27,6 @@ content-type: application/json
   "comments": "The best round ever",
   "isActive": true
 }
+
+### DRAW ROUND
+POST http://localhost:3000/rounds/a48fc0ca-b619-4870-b7c0-df238f9b7b84/draw

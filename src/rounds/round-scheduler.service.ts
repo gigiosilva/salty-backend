@@ -47,6 +47,8 @@ export class RoundSchedulerService {
   }
 
   initRoundSchedules(activeRounds: Round[]) {
+    if (!activeRounds || !activeRounds.length) return;
+
     activeRounds.forEach((round) => {
       this.scheduleRound(round);
     });

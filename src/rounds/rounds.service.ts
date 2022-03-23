@@ -86,8 +86,11 @@ export class RoundsService {
     if (!roundUsers.length) return;
 
     const drawnUsers = this.drawRound(round, roundUsers);
-    this.logger.verbose(`Drawn users ${JSON.stringify(drawnUsers.map(user => ({ userId: user.userId, friendId: user.friendId })))}`);
+    const drawnUsersClean = JSON.stringify(drawnUsers.map(user => ({ userId: user.userId, friendId: user.friendId })));
+    this.logger.verbose(`Drawn users ${drawnUsersClean}`);
     // we can send email or slack message here
+
+    return drawnUsersClean;
   }
 
   async endRound(round: Round) {
@@ -95,6 +98,8 @@ export class RoundsService {
   }
 
   async deactiveOldRounds(activeRounds: Round[]) {
+    if (!activeRounds || !activeRounds.length) return;
+
     for (const round of activeRounds) {
       if (round.endDate <= new Date()) this.endRound(round);
     }
@@ -106,20 +111,21 @@ export class RoundsService {
     const drawnUsers = [...roundUsers];
 
     roundUsers.forEach((roundUser, i) => {
-      if (roundUser.friendId) return roundUser;
+      const notDrawnUsers = drawnUsers.filter(user => {
+        const isNotTheSame = user.userId !== roundUser.userId;
+        const isNotDrawn = drawnUsers.find(drawnUser => drawnUser.friendId === user.userId) === undefined;
 
-      const notDrawnUsers = drawnUsers.filter(
-        // remove users already drawn
-        user => drawnUsers.find(drawnUser => drawnUser.friendId === user.userId) === undefined
-        // remove own user
-        && user.userId !== roundUser.userId,
-      );
+        return isNotDrawn && isNotTheSame;
+      });
 
       const drawIndex = Math.floor(Math.random() * notDrawnUsers.length);
 
       drawnUsers[i].friendId = notDrawnUsers[drawIndex]?.userId || null;
       this.roundUsersService.update(drawnUsers[i].userId, drawnUsers[i].roundId, drawnUsers[i]);
     });
+
+    const isFullMatch = drawnUsers.find(user => user.friendId === null) === undefined;
+    if (!isFullMatch) this.drawRound(round, roundUsers);
 
     return drawnUsers;
   }
