@@ -26,11 +26,64 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Development
 
-```bash
-$ npm install
-```
+- Copy `.env.example` as `.env`:
+
+  ```bash
+  $ cp .env.example .env
+  ```
+
+### Docker
+
+- You need [Docker](https://www.docker.com/products/docker-desktop/) installed to run the project locally.
+
+- Docker compose will create a container for Postgresql database, PGAdmin (Web UI for Postgresql) and the NestJS Api.
+
+  ```bash
+  $ docker-compose build
+  ```
+
+- First time you will need to run the migrations in order to create the database and its schema. Also pgadmin won't work.
+
+  ```bash
+  $ docker-compose run nestjs yarn migration:run
+  ```
+
+- Then you can run it and being able to access `localhost:3000` and `localhost:8080`
+
+  ```bash
+  $ docker-compose up
+  ```
+
+  - `localhost:3000` NestJS API.
+  - `localhost:8080` pgadmin, using user and password that you have in `.env` file.
+
+### PGAdmin
+
+Accessing to pgadmin, fisrt time, you need to add a new server using the data on your `.env` file
+
+### Local
+
+Remember that the app needs a postgresql instance to run correctly.
+
+- Install dependencies:
+
+  ```bash
+  $ yarn install
+  ```
+
+- Run migrations:
+
+  ```bash
+  $ yarn migrations:run
+  ```
+
+- Execute app:
+
+  ```bash
+  $ yarn start:dev
+  ```
 
 ## Running the app
 
