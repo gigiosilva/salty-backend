@@ -5,8 +5,13 @@ import { AuthGuard } from '@nestjs/passport';
 
 import { UsersModule } from '../src/users/users.module';
 import { AuthzModule } from '../src/authz/authz.module';
+import { UserPreferencesModule } from '../src/user-preferences/user-preferences.module';
+import { UserAddressModule } from '../src/user-address/user-addresses.module';
 import { AuthzService } from '../src/authz/authz.service';
 import { UsersService } from '../src/users/users.service';
+import { UserPreferencesRepository } from '../src/user-preferences/user-preferences.repository';
+import { UserAddressesRepository } from '../src/user-address/user-addresses.repository';
+import { FoodPlacesRepository } from '../src/food-places/food-places.repository';
 
 const usersServiceMock = {
   getUsers: jest.fn(),
@@ -18,13 +23,27 @@ const authzServiceMock = {
   getAccess: jest.fn(),
 };
 
+const userPreferencesRepositoryMock = {
+  find: jest.fn(),
+  findOne: jest.fn(),
+};
+
+const userAddressRepositoryMock = {
+  find: jest.fn(),
+  findOne: jest.fn(),
+};
+
+const foodPlacesRepositoryMock = {
+  getFoodPlaces: jest.fn(),
+};
+
 describe('** USER ROUTES **', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const mockAuthGuard = { canActivate: jest.fn(() => true) };
     const module: TestingModule = await Test.createTestingModule({
-      imports: [UsersModule, AuthzModule],
+      imports: [UsersModule, AuthzModule, UserPreferencesModule, UserAddressModule],
     })
       .overrideProvider(UsersService)
       .useValue(usersServiceMock)
@@ -32,6 +51,12 @@ describe('** USER ROUTES **', () => {
       .useValue(mockAuthGuard)
       .overrideProvider(AuthzService)
       .useValue(authzServiceMock)
+      .overrideProvider(UserPreferencesRepository)
+      .useValue(userPreferencesRepositoryMock)
+      .overrideProvider(UserAddressesRepository)
+      .useValue(userAddressRepositoryMock)
+      .overrideProvider(FoodPlacesRepository)
+      .useValue(foodPlacesRepositoryMock)
       .compile();
 
     app = module.createNestApplication();
