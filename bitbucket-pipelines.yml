@@ -5,35 +5,31 @@ pipelines:
     - step:
         name: Build and Test
         image: node:14.16.1
-        caches:
-          - node
         script:
-          - npm install
-          - npm run test
-          - npm run build
+          - yarn install
+          - yarn run test
+          - yarn run build
     - step:
         name: Lint
         image: node:14.16.1
         script:
-          - npm install
-          - npm run lint
+          - yarn install
+          - yarn run lint
   branches:
     master:
       - step:
           name: Build and Test
           image: node:14.16.1
-          caches:
-            - node
           script:
-            - npm install
-            - npm run test
-            - npm run build
+            - yarn install
+            - yarn run test
+            - yarn run build
       - step:
           name: Lint
           image: node:14.16.1
           script:
-            - npm install
-            - npm run lint
+            - yarn install
+            - yarn run lint
       - step:
           name: Publish Prod
           deployment: production

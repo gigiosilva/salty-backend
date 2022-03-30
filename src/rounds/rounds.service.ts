@@ -110,22 +110,25 @@ export class RoundsService {
 
     const drawnUsers = [...roundUsers];
 
-    roundUsers.forEach((roundUser, i) => {
-      const notDrawnUsers = drawnUsers.filter(user => {
-        const isNotTheSame = user.userId !== roundUser.userId;
-        const isNotDrawn = drawnUsers.find(drawnUser => drawnUser.friendId === user.userId) === undefined;
+    let isFullMatch = false;
 
-        return isNotDrawn && isNotTheSame;
+    do {
+      roundUsers.forEach((roundUser, i) => {
+        const notDrawnUsers = drawnUsers.filter(user => {
+          const isNotTheSame = user.userId !== roundUser.userId;
+          const isNotDrawn = drawnUsers.find(drawnUser => drawnUser.friendId === user.userId) === undefined;
+
+          return isNotDrawn && isNotTheSame;
+        });
+
+        const drawIndex = Math.floor(Math.random() * notDrawnUsers.length);
+
+        drawnUsers[i].friendId = notDrawnUsers[drawIndex]?.userId || null;
+        this.roundUsersService.update(drawnUsers[i].userId, drawnUsers[i].roundId, drawnUsers[i]);
       });
 
-      const drawIndex = Math.floor(Math.random() * notDrawnUsers.length);
-
-      drawnUsers[i].friendId = notDrawnUsers[drawIndex]?.userId || null;
-      this.roundUsersService.update(drawnUsers[i].userId, drawnUsers[i].roundId, drawnUsers[i]);
-    });
-
-    const isFullMatch = drawnUsers.find(user => user.friendId === null) === undefined;
-    if (!isFullMatch) this.drawRound(round, roundUsers);
+      isFullMatch = drawnUsers.find(user => user.friendId === null) === undefined;
+    } while (!isFullMatch);
 
     return drawnUsers;
   }
