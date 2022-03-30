@@ -1,5 +1,5 @@
 import {
-  Controller, Get, Logger, UseGuards, Injectable, Put, Param, Body,
+  Controller, Get, Logger, Injectable, Put, Param, Body,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -9,7 +9,6 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
 
 import { AuthzService } from '../authz/authz.service';
 import { AccessModel } from '../authz/access.model';
@@ -40,7 +39,6 @@ export class UsersController {
     @ApiOperation({ summary: 'Get users' })
     @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
     @ApiOkResponse({ description: 'Get all users.', type: UserModel, isArray: true })
-    @UseGuards(AuthGuard('jwt'))
     @Get()
     async getUsers() {
       this.logger.verbose('Retrieving all users from Auth0');
@@ -56,7 +54,6 @@ export class UsersController {
     @ApiOperation({ summary: 'Get user' })
     @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
     @ApiOkResponse({ description: 'Get user.', type: UserModel })
-    @UseGuards(AuthGuard('jwt'))
     @Get('/:id')
     async getUser(@Param('id') id: string) {
       this.logger.verbose('Getting user');
@@ -72,7 +69,6 @@ export class UsersController {
     @ApiBody({ type: UpdateUserDto })
     @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
     @ApiOkResponse({ description: 'Update user.', type: UserModel })
-    @UseGuards(AuthGuard('jwt'))
     @Put('/:id')
     async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
       this.logger.verbose('Updating user');
