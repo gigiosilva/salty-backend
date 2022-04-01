@@ -47,7 +47,7 @@
 - First time you will need to run the migrations in order to create the database and its schema. Also pgadmin won't work.
 
   ```bash
-  $ docker-compose run nestjs yarn migration:run
+  $ yarn migration:run
   ```
 
 - Then you can run it and being able to access `localhost:3000` and `localhost:8080`
@@ -57,6 +57,7 @@
   ```
 
   - `localhost:3000` NestJS API.
+  - `localhost:5432` postgresql
   - `localhost:8080` pgadmin, using user and password that you have in `.env` file.
 
 ### PGAdmin
