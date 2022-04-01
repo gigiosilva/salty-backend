@@ -21,13 +21,9 @@ import { JwtAuthGuard } from './authz/jwt-auth.guard';
   imports: [
     ConfigModule.forRoot({
       validationSchema: Joi.object({
+        DATABASE_URL: Joi.required(),
         NODE_ENV: Joi.required(),
-        APP_PORT: Joi.required(),
-        POSTGRES_HOST: Joi.required(),
-        POSTGRES_PORT: Joi.required(),
-        DATABASE_USER: Joi.required(),
-        DATABASE_PASSWORD: Joi.required(),
-        POSTGRES_USER: Joi.required(),
+        PORT: Joi.required(),
       }),
     }),
     TypeOrmModule.forRoot(DatabaseConfig),

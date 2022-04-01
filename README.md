@@ -61,7 +61,7 @@
 
 ### PGAdmin
 
-Accessing to pgadmin, fisrt time, you need to add a new server using the data on your `.env` file
+Accessing to pgadmin, first time, you need to add a new server using the data on your `.env` file
 
 ### Local
 
@@ -76,7 +76,7 @@ Remember that the app needs a postgresql instance to run correctly.
 - Run migrations:
 
   ```bash
-  $ yarn migrations:run
+  $ yarn migration:run
   ```
 
 - Execute app:

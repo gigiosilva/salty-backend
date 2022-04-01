@@ -4,9 +4,9 @@ services:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     container_name: postgres-db
     volumes:
       - ./pgdata:/var/lib/postgresql/data
@@ -15,15 +15,10 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      - APP_PORT=${APP_PORT}
-      - DB_TYPE=${DB_TYPE}
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASS=${DATABASE_PASSWORD}
-      - POSTGRES_PORT=${POSTGRES_PORT}
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=${PORT}
     ports:
-      - '${APP_PORT}:3000' # expose-to-the-world : only-in-the-docker
+      - '${PORT}:3000' # expose-to-the-world : only-in-the-docker
     container_name: salty-nestjs
     depends_on:
       - db
