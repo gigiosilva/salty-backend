@@ -53,7 +53,7 @@
 - Then you can run it and being able to access `localhost:3000` and `localhost:8080`
 
   ```bash
-  $ docker-compose up
+  $ yarn start:docker
   ```
 
   - `localhost:3000` NestJS API.
