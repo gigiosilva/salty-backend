@@ -2,7 +2,9 @@ import {
   ConflictException, Injectable, InternalServerErrorException, Logger, NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Express } from 'express';
 
+import { CloudinaryService } from './../third-party/cloudinary.service';
 import { CreateRoundUserDto } from './dto/create-round-user.dto';
 import { RoundUsersRepository } from './round-users.repository';
 import { RoundUser } from './round-user.entity';
@@ -15,6 +17,7 @@ export class RoundUsersService {
   constructor(
     @InjectRepository(RoundUsersRepository)
     private roundUsersRepository: RoundUsersRepository,
+    private cloudinaryService: CloudinaryService,
   ) {}
 
   async create(userId: string, roundId: string, createRoundUserDto: CreateRoundUserDto) {
@@ -54,5 +57,14 @@ export class RoundUsersService {
     if (result.affected === 0) {
       throw new NotFoundException();
     }
+  }
+
+  async uploadGift(userId: string, roundId: string, file: Express.Multer.File) {
+    const roundUser: RoundUser = await this.findOne(userId, roundId);
+    if (!roundUser) throw new NotFoundException();
+
+    const uploadedPhoto = await this.cloudinaryService.uploadPhoto(`rounds/${roundId}/${userId}`, file);
+
+    return this.update(userId, roundId, { giftPhoto: uploadedPhoto.secure_url });
   }
 }
