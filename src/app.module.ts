@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import * as Joi from 'joi';
 import { APP_GUARD } from '@nestjs/core';
+import * as Joi from 'joi';
 
 import DatabaseConfig from '../ormconfig';
 
@@ -16,6 +16,8 @@ import { RoundsModule } from './rounds/rounds.module';
 import { FaqsModule } from './faqs/faqs.module';
 import { RoundUsersModule } from './round-users/round-users.module';
 import { JwtAuthGuard } from './authz/jwt-auth.guard';
+import { ThirdPartyModule } from './third-party/third-party.module';
+import CloudinaryProvider from './third-party/cloudinary.provider';
 
 @Module({
   imports: [
@@ -36,8 +38,10 @@ import { JwtAuthGuard } from './authz/jwt-auth.guard';
     RoundsModule,
     FaqsModule,
     RoundUsersModule,
+    ThirdPartyModule,
   ],
   providers: [
+    CloudinaryProvider,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
