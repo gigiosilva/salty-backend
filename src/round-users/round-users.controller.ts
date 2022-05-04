@@ -1,7 +1,9 @@
 import {
-  Controller, Get, Post, Body, Param, Delete, Put,
+  Controller, Get, Post, Body, Param, Delete, Put, UseInterceptors, UploadedFile,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
 
 import { RoundUsersService } from './round-users.service';
 import { UpdateRoundUserDto } from './dto/update-round-user.dto';
@@ -51,5 +53,27 @@ export class RoundUsersController {
     @Param('roundId') roundId: string,
   ) {
     return this.roundUsersService.remove(userId, roundId);
+  }
+
+  @Post(':userId/photo')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(FileInterceptor('file'))
+  uploadGift(
+    @Param('userId') userId: string,
+    @Param('roundId') roundId: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.roundUsersService.uploadGift(userId, roundId, file);
   }
 }
