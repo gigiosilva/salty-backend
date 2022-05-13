@@ -5,6 +5,40 @@ workflows:
       npm: latest
       groups:
         - salty
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*'
+          include: true
+          source: true
+        - pattern: 'master'
+          include: false
+          source: false
+      cancel_previous_builds: false
+    scripts:
+      - name: Install dependencies
+        script: yarn install --immutable --immutable-cache --check-cache
+      - name: Run tests
+        script: yarn run test
+      - name: Run build
+        script: yarn run build
+      - name: Run lint
+        script: yarn run lint
+  production:
+    environment:
+      node: 14.16.1
+      npm: latest
+      groups:
+        - salty
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: 'master'
+          include: true
+          source: true
+      cancel_previous_builds: false
     scripts:
       - name: Install dependencies
         script: yarn install --immutable --immutable-cache --check-cache
