@@ -21,6 +21,6 @@ content-type: application/json
 
 {
   "title": "How to choose friend?",
-  "description": "You can choose by choosing",
+  "description": "You can choose by choosing...",
   "category": "Friends"
 }
