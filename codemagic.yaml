@@ -1,0 +1,18 @@
+workflows:
+  default:
+    environment:
+      node: 14.16.1
+      npm: latest
+      groups:
+        - salty
+    scripts:
+      - name: Install dependencies
+        script: yarn install --immutable --immutable-cache --check-cache
+      - name: Run tests
+        script: yarn run test
+      - name: Run build
+        script: yarn run build
+      - name: Run lint
+        script: yarn run lint
+      - name: Publish Heroku
+        script: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/api-salty-sparkdigital.git HEAD:master -f --no-verify

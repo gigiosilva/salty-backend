@@ -181,63 +181,6 @@ describe('** ROUNDS ROUTES **', () => {
     });
   });
 
-  describe('POST /rounds/:id/draw', () => {
-    const roundId = '5c9f8f8f-f912-4b4e-9016-4ef9c28bec06';
-
-    const roundUsers = [
-      {
-        id: '8fe4560c-c766-46a3-836f-e9663ce59e04',
-        userId: '6',
-        friendId: '9321',
-        roundId: 'a48fc0ca-b619-4870-b7c0-df238f9b7b84',
-      },
-      {
-        id: 'ed6442f5-339a-4a02-b8a7-268396e3105a',
-        userId: '7',
-        friendId: '9321',
-        roundId: 'a48fc0ca-b619-4870-b7c0-df238f9b7b84',
-      },
-      {
-        id: '5c9f8f8f-f912-4b4e-9016-4ef9c28bec06',
-        userId: '8',
-        friendId: '9321',
-        roundId: 'a48fc0ca-b619-4870-b7c0-df238f9b7b84',
-      },
-    ];
-
-    const roundUser = {
-      id: '5c9f8f8f-f912-4b4e-9016-4ef9c28bec06',
-      userId: '8',
-      friendId: '9321',
-      roundId: 'a48fc0ca-b619-4870-b7c0-df238f9b7b84',
-    };
-
-    const round = {
-      id: 'a48fc0ca-b619-4870-b7c0-df238f9b7b84',
-      createdBy: '5c9f8f8f-f912-4b4e-9016-4ef9c28bec06',
-      name: 'Round 3',
-      startDate: '2022-01-11T00:00:00.000Z',
-      endDate: '2022-01-20T00:00:00.000Z',
-      comments: 'The best round ever',
-      isActive: true,
-      createdAt: '2022-01-11T20:02:54.087Z',
-    };
-
-    it('should draw a round', async () => {
-      roundUsersRepoMock.find.mockResolvedValue(roundUsers);
-      roundUsersRepoMock.findOne.mockResolvedValue(roundUser);
-      roundsRepoMock.findOne.mockResolvedValue(round);
-
-      await request(app.getHttpServer())
-        .post(`/rounds/${roundId}/draw`)
-        .send()
-        .expect(201)
-        .expect(drawnUsers => {
-          return JSON.parse(drawnUsers.text).find(user => user.friendId === null) === undefined;
-        });
-    });
-  });
-
   afterAll(async () => {
     await app.close();
   });
