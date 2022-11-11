@@ -1,0 +1,5 @@
+### GET USERS
+http://localhost:3000/users
+
+### GET USERS BY ID
+http://localhost:3000/users/oauth2|slack|T02G7HTD962-U02NJAXL95G
